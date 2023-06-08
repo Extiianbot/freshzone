@@ -2,8 +2,25 @@ from django.shortcuts import render, redirect
 from django.views.generic import TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from item.models import Category, Item
+from .forms import SignupForm, LoginForm
+from django.contrib import messages
 
-from .forms import SignupForm
+def home(request):
+    if request.method == 'POST':
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            # Validate the captcha field
+            captcha_value = request.POST.get('g-recaptcha-response', '')
+            if not captcha_value or not form.fields['captcha'].verify(captcha_value, request.META.get('REMOTE_ADDR')):
+                messages.error(request, "Wrong Captcha!")
+            else:
+                messages.success(request, "Success!")
+        else:
+            messages.error(request, "Form validation error!")
+    else:
+        form = LoginForm()
+    
+    return render(request, 'login.html', {'form': form})
 
 def index(request):
     items = Item.objects.filter(is_sold=False)[0:6]

@@ -1,6 +1,10 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
+from captcha.fields import ReCaptchaField
+from captcha.widgets import ReCaptchaV2Checkbox
+
+
 
 class LoginForm(AuthenticationForm):
     username = forms.CharField(widget=forms.TextInput(attrs={
@@ -11,6 +15,7 @@ class LoginForm(AuthenticationForm):
         'placeholder': 'Your password',
         'class': 'w-full py-4 px-6 rounded-xl'
     }))
+    captcha = ReCaptchaField(widget=ReCaptchaV2Checkbox())
 
 class SignupForm(UserCreationForm):
     class Meta:
@@ -32,4 +37,4 @@ class SignupForm(UserCreationForm):
     password2 = forms.CharField(widget=forms.PasswordInput(attrs={
         'placeholder': 'Repeat password',
         'class': 'w-full py-4 px-6 rounded-xl'
-    }))
+    })) 

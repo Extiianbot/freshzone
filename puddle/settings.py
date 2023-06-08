@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'core',
     'dashboard',
     'item',
+    'captcha',
 
     'social_django',  # <-- Here social-auth-app-django
     
@@ -160,3 +161,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 SOCIAL_AUTH_FACEBOOK_KEY = '603573131450951'  # App ID
 SOCIAL_AUTH_FACEBOOK_SECRET = '3858d590965ce13c062c17030faa4bb7'  # App Secret
 
+RECAPTCHA_PUBLIC_KEY = '6LfpUHUmAAAAAP-2h3qRFDCfPQwbKnEe3krZniJQ'
+RECAPTCHA_PRIVATE_KEY = '6LfpUHUmAAAAALLAuWf7fNsbOCrr63o_UG7jiU82'
+SILENCED_SYSTEM_CHECKS = ['captcha.recaptcha_test_key_error']
+RECAPTCHA_DOMAIN = 'www.recaptcha.net'
