@@ -9,11 +9,12 @@ def home(request):
     if request.method == 'POST':
         form = LoginForm(request.POST)
         if form.is_valid():
-            # Validate the captcha field
+            # Verify reCAPTCHA
             captcha_value = request.POST.get('g-recaptcha-response', '')
             if not captcha_value or not form.fields['captcha'].verify(captcha_value, request.META.get('REMOTE_ADDR')):
-                messages.error(request, "Wrong Captcha!")
+                messages.error(request, "Error verifying reCAPTCHA, please try again.")
             else:
+                # reCAPTCHA verification successful
                 messages.success(request, "Success!")
         else:
             messages.error(request, "Form validation error!")
